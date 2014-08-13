@@ -17,6 +17,7 @@ Guia do Desenvolvedor
     - [Variáveis Acessíveis](#variáveis-acessíveis)
     - [Verificando se um usuário está logado](#verificando-se-um-usuário-está-logado)
 - [Autenticação]()
+- [Roles]()
 - [Log]()
 - [Cache]()
 - [Outputs da API]()
@@ -38,16 +39,16 @@ A classe abstrata **MapasCulturais\Entity** é a classe que serve de base para to
 
 - **EntityAgentRelation** - Deve ser usado em entidades que podem ter agentes relacionados. Requer uma entidade auxiliar com o mesmo nome da entidade acrescida do sufixo AgentRelation (exemplo: para a entidade *Event*, uma classe *EventAgentRelation*).
 - **EntityFiles** - Deve ser usado em entidades que podem ter arquivos anexados.
-- **EntityAvatar** - Deve ser usado em entidades que tem avatar. Requer o trait *EntityFiles*.
+- **EntityAvatar** - Deve ser usado em entidades que tenham avatar. Requer o trait *EntityFiles*.
 - **EntityGeoLocation** - Deve ser usado em entidades georreferenciadas. Requer as propriedades *location*, do tipo *point*, e *_geoLocation*, do tipo *geography*.
-- **EntityMetadata** - Deve ser usado em entidades que tem metadado. Requer de uma entidade auxiliar. Se existir no mesmo namespace uma classe com o nome da entidade acrescida do sufixo *Meta* (exemplo: para a entidade *Agent*, uma classe *AgentMeta*), esta será usada, senão a entidade Metadata será usada como auxiliar.
-- **EntityMetaLists** -
-- **EntityNested** -
-- **EntityOwnerAgent** -
-- **EntitySoftDelete** -
-- **EntityTaxonomies** -
-- **EntityTypes** -
-- **EntityVerifiable** -
+- **EntityMetadata** - Deve ser usado em entidades que tenham metadados. Requer de uma entidade auxiliar. Se existir no mesmo namespace uma classe com o nome da entidade acrescida do sufixo *Meta* (exemplo: para a entidade *Agent*, uma classe *AgentMeta*), esta será usada, senão a entidade Metadata será usada como auxiliar.
+- **EntityMetaLists** - Deve ser usado em entidades que tenham metadados com múltiplos valores por chave. (exemplo de uso: links).
+- **EntityNested** - Deve ser usado em entidades hierarquicas. Requer as [associações autoreferenciadas](http://docs.doctrine-project.org/en/latest/reference/association-mapping.html#one-to-many-self-referencing) *children* e *parent*.
+- **EntityOwnerAgent** - Deve ser usado em entidades que tenham a associação [ManyToOne](http://docs.doctrine-project.org/en/latest/reference/association-mapping.html#many-to-one-unidirectional) *owner* apontando para a entidade *MapasCulturais\Entity\Agent*. Requer também um mapeamento do tipo *int* chamado *_ownerId* que representa o id do agente que é dono desta entidade.
+- **EntitySoftDelete** - Usado em entidades que necessitem de lixeira. Requer um mapeamento do tipo *int* chamado *status*.
+- **EntityTaxonomies** - Deve ser usado em entidades que precisem de taxonomias (tags, área de atuação, etc.).
+- **EntityTypes** - Deve ser usado em entidades que tenham tipos. Requer um mapeamento do tipo *int* chamado *_type*. 
+- **EntityVerifiable** - Deve ser usado em entidades *verificáveis*, o seja, que podem ser marcadas como *oficiais* pelos admins ou membros da equipe.
 
 ### Verificação de Permissões
 
