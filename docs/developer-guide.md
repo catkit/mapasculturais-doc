@@ -25,6 +25,15 @@ Guia do Desenvolvedor
 
 ## Arquivo de Configuração
 
+## Traits
+Os [traits](http://php.net/manual/pt_BR/language.oop5.traits.php) ficam no namespace **MapasCulturais\Traits** e seus arquivos na pasta [src/protected/application/lib/MapasCulturais/Traits](../src/protected/application/lib/MapasCulturais/Traits). 
+
+Se houver no nome do trait um prefixo (*Entity, Controller ou Repository*) significa que este trait só deve ser utilizado em classes que estendam a classe com o nome do prefixo dentro do namespace MapasCulturais (ex: o trait *EntityAvatar* só deve ser utilizado em classes que estendem a classe *MapasCulturais\Entity*). Já se não houver um prefixo significa que é um [trait genérico](#traits-genéricos) e que pode ser utilizado em qualquer classe (exemplos: Singleton e MagigGetter).
+
+
+### Traits Genéricos
+Os genéricos são aqueles que nã 
+
 ## Model
 As classes de modelo ficam no namespace **MapasCulturais\Entities** e seus arquivos dentro da pasta [src/protected/application/lib/MapasCulturais/Entities](../src/protected/application/lib/MapasCulturais/Entities). 
 
@@ -33,7 +42,7 @@ Estas classes devem estender a classe abstrata [MapasCulturais\Entity](#classe-e
 Estas podem também usar os [traits criados para entidades](#traits-das-entidades) (os que têm o prefixo **Entity** no nome, como por exmplo o *EntityFiles*, que é para ser usado em entidades que têm arquivos anexos).
 
 ### Classe Entity
-A classe abstrata **MapasCulturais\Entity** é a classe que serve de base para todoas as entidades do sistema. Ela implementa uma série de métodos úteis
+A classe abstrata [MapasCulturais\Entity](../src/protected/application/lib/MapasCulturais/Entity.php) é a classe que serve de base para todoas as entidades do sistema. Implementa uma série de métodos úteis para, entre outros, [verificação de permissões](#verificação-de-permissões), serialização e [validações](#validações).
 
 ### Traits das Entidades
 
@@ -51,6 +60,10 @@ A classe abstrata **MapasCulturais\Entity** é a classe que serve de base para to
 - **EntityVerifiable** - Deve ser usado em entidades *verificáveis*, o seja, que podem ser marcadas como *oficiais* pelos admins ou membros da equipe.
 
 ### Verificação de Permissões
+
+### Validações
+
+
 
 ## Controller
 
