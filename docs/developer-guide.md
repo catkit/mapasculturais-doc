@@ -29,7 +29,7 @@ As classes de modelo ficam no namespace **MapasCulturais\Entities** e seus arqui
 
 Estas classes devem estender a classe abstrata [MapasCulturais\Entity](#classe-entity) e usar os [Docblock Annotations](http://docs.doctrine-project.org/en/latest/reference/annotations-reference.html) do [Doctrine](http://docs.doctrine-project.org/en/latest/index.html) para fazer o [mapeamento](http://docs.doctrine-project.org/en/latest/reference/basic-mapping.html) com a representação desta entidade no banco de dados (geralmente uma tabela). 
 
-Estas podem também usar os [traits criados para entidades](#traits-das-entidades) (os que têm o prefixo **Entity** no nome, como por exmplo o _**Entity**Files_, que é para ser usado em entidades que têm arquivos anexos).
+Estas podem também usar os [traits criados para entidades](#traits-das-entidades) (os que têm o prefixo **Entity** no nome, como por exmplo o ***Entity**Files*, que é para ser usado em entidades que têm arquivos anexos).
 
 ### Classe Entity
 A classe abstrata **MapasCulturais\Entity** é a classe que deve servir de base para todoas as entidades do sistema
