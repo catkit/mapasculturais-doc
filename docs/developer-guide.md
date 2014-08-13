@@ -29,9 +29,9 @@ O intuíto deste documento é dar uma visão panorâmica da arquitetura e funcioname
 - [Outputs da API]()
 
 ## Introdução
-O mínimo requerido para rodar o Mapas Culturais é PHP >= 5.4, PostgreSQL >= 9.1 com PostGIS >= 2.1
+O mínimo requerido para rodar o Mapas Culturais é PHP >= 5.4, PostgreSQL >= 9.1 com PostGIS >= 2.1.
 
-As seguintes extensões do PHP são requeridas: *gd, apc, zip, curl, pgsql, phar, pdo_pgsql*
+As seguintes extensões do PHP são requeridas: *gd, apc, zip, curl, pgsql, phar, pdo_pgsql*.
 
 
 ### Bibliotecas PHP Utilizadas
@@ -60,7 +60,12 @@ Se houver no nome do trait um prefixo (*Entity, Controller ou Repository*) signi
 
 
 ### Traits Genéricos
-Os genéricos são aqueles que nã 
+
+#### MagicCallers
+#### MagicGetter
+#### MagicSetter
+#### Singleton
+
 
 ## Model
 As classes de modelo ficam no namespace **MapasCulturais\Entities** e seus arquivos dentro da pasta [src/protected/application/lib/MapasCulturais/Entities](../src/protected/application/lib/MapasCulturais/Entities). 
