@@ -1,10 +1,16 @@
 Guia do Desenvolvedor
 =====================
+O intuíto deste documento é dar uma visão panorâmica da arquitetura e funcionamento do Mapas Culturais para quem quiser colaborar no desenvolvimento da plataforma. Este documento está ainda incompleto e em constante desenvolvimento.
 
+- [Introdução](#introdução)
+    - [Bibliotecas PHP utilizadas](#bibliotecas-php-utilizadas)
+    - [Bibliotecas Javascript utilizadas](#bibliotecas-javascript-utilizadas)
 - [Arquivo de Configuração](#arquivo-de-configuracao)
+- [App](#app)
+- [Traits](#traits)
+    - [Traits Genéricos](#traits-genéricos)
 - [Model](#model)
 - [Controller](#controller)
-- [EntityController](#entitycontroller)
 - [View](#view)
     - [Temas](#temas)
       - [theme.php](theme-php)
@@ -22,8 +28,26 @@ Guia do Desenvolvedor
 - [Cache]()
 - [Outputs da API]()
 
+## Introdução
+
+### Bibliotecas PHP Utilizadas
+Ver arquivo [composer.json](../src/protected/composer.json)
+- [Slim](https://packagist.org/packages/slim/slim) - Microframework em cima do qual foi escria a classe [App](#app) do MapasCulturais.
+- [Doctrine/ORM](https://packagist.org/packages/doctrine/orm) - ORM utilizado para o mapeamento das entidades.
+- [Opauth/OpenId](https://packagist.org/packages/opauth/openid) - Utilizado para autenticação via OpenId.
+- [respect/validation](https://packagist.org/packages/respect/validation) - Utilizado para as validações das propriedades e metadados das entidades.
+- [smottt/wideimage](https://packagist.org/packages/smottt/wideimage) - Utilizado para *transformar* imagens (criar thumbnails, por exemplo).
+- [phpunit/phpunit](https://packagist.org/packages/phpunit/phpunit) - Utilizado para testes.
+- [creof/doctrine2-spatial](https://packagist.org/packages/creof/doctrine2-spatial) - Faz o mapeamento de várias procedures do PostGIS para o doctrine.
+- [mustache/mustache](https://packagist.org/packages/mustache/mustache) - Utilizado para renderizar alguns templates.
+- [phpoffice/phpword](https://packagist.org/packages/phpoffice/phpword) - Utilizado para criar .docs ou .xls onde necessário.
+- [michelf/php-markdown](https://packagist.org/packages/michelf/php-markdown) - Utilizado para renderizar os markdowns das [páginas](#páginas)
+
+### Bibliotecas Javascript Utilizadas
 
 ## Arquivo de Configuração
+
+## App
 
 ## Traits
 Os [traits](http://php.net/manual/pt_BR/language.oop5.traits.php) ficam no namespace **MapasCulturais\Traits** e seus arquivos na pasta [src/protected/application/lib/MapasCulturais/Traits](../src/protected/application/lib/MapasCulturais/Traits). 
@@ -63,20 +87,7 @@ A classe abstrata [MapasCulturais\Entity](../src/protected/application/lib/Mapas
 
 ### Validações
 
-
-
 ## Controller
-
-### Actions
-### Método render
-### Método partial
-### Retornando um JSON
-### Requisitando autenticação
-### Checando permissão
-
-
-
-## EntityController
 
 ## View
 
