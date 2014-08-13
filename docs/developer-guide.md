@@ -29,27 +29,25 @@ As classes de modelo ficam no namespace **MapasCulturais\Entities** e seus arqui
 
 Estas classes devem estender a classe abstrata [MapasCulturais\Entity](#classe-entity) e usar os [Docblock Annotations](http://docs.doctrine-project.org/en/latest/reference/annotations-reference.html) do [Doctrine](http://docs.doctrine-project.org/en/latest/index.html) para fazer o [mapeamento](http://docs.doctrine-project.org/en/latest/reference/basic-mapping.html) com a representação desta entidade no banco de dados (geralmente uma tabela). 
 
-Estas podem também usar os [traits criados para entidades](#traits-das-entidades) (os que têm o prefixo **Entity** no nome, como por exmplo o ***Entity**Files*, que é para ser usado em entidades que têm arquivos anexos).
+Estas podem também usar os [traits criados para entidades](#traits-das-entidades) (os que têm o prefixo **Entity** no nome, como por exmplo o *EntityFiles*, que é para ser usado em entidades que têm arquivos anexos).
 
 ### Classe Entity
-A classe abstrata **MapasCulturais\Entity** é a classe que deve servir de base para todoas as entidades do sistema
+A classe abstrata **MapasCulturais\Entity** é a classe que serve de base para todoas as entidades do sistema. Ela implementa uma série de métodos úteis
 
 ### Traits das Entidades
 
-#### EntityAgentRelation
-Este trait é para ser usado em entidades que podem ter agentes relacionados.
-
-#### EntityAvatar
-#### EntityFiles
-#### EntityGeoLocation
-#### EntityMetadata
-#### EntityMetaLists
-#### EntityNested
-#### EntityOwnerAgent
-#### EntitySoftDelete
-#### EntityTaxonomies
-#### EntityTypes
-#### EntityVerifiable
+- **EntityAgentRelation** - Deve ser usado em entidades que podem ter agentes relacionados. Requer uma entidade auxiliar com o mesmo nome da entidade acrescida do sufixo AgentRelation (exemplo: para a entidade *Event*, uma classe *EventAgentRelation*).
+- **EntityFiles** - Deve ser usado em entidades que podem ter arquivos anexados.
+- **EntityAvatar** - Deve ser usado em entidades que tem avatar. Requer o trait *EntityFiles*.
+- **EntityGeoLocation** - Deve ser usado em entidades georreferenciadas. Requer as propriedades *location*, do tipo *point*, e *_geoLocation*, do tipo *geography*.
+- **EntityMetadata** - Deve ser usado em entidades que tem metadado. Requer de uma entidade auxiliar. Se existir no mesmo namespace uma classe com o nome da entidade acrescida do sufixo *Meta* (exemplo: para a entidade *Agent*, uma classe *AgentMeta*), esta será usada, senão a entidade Metadata será usada como auxiliar.
+- **EntityMetaLists** -
+- **EntityNested** -
+- **EntityOwnerAgent** -
+- **EntitySoftDelete** -
+- **EntityTaxonomies** -
+- **EntityTypes** -
+- **EntityVerifiable** -
 
 ### Verificação de Permissões
 
