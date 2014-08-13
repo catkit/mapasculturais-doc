@@ -29,6 +29,9 @@ O intuíto deste documento é dar uma visão panorâmica da arquitetura e funcioname
 - [Outputs da API]()
 
 ## Introdução
+O mínimo requerido para rodar o Mapas Culturais é PHP >= 5.4, PostgreSQL >= 9.1 com PostGIS >= 2.1
+
+As seguintes extensões do PHP são requeridas: *gd, apc, zip, curl, pgsql, phar, pdo_pgsql*
 
 
 ### Bibliotecas PHP Utilizadas
