@@ -30,6 +30,7 @@ O intuíto deste documento é dar uma visão panorâmica da arquitetura e funcioname
 
 ## Introdução
 
+
 ### Bibliotecas PHP Utilizadas
 Ver arquivo [composer.json](../src/protected/composer.json)
 - [Slim](https://packagist.org/packages/slim/slim) - Microframework em cima do qual foi escria a classe [App](#app) do MapasCulturais.
