@@ -27,6 +27,7 @@ O intuíto deste documento é dar uma visão panorâmica da arquitetura e funcioname
 - [Log]()
 - [Cache]()
 - [Outputs da API]()
+- [Exceções]()
 
 ## Introdução
 O mínimo requerido para rodar o Mapas Culturais é PHP >= 5.4, PostgreSQL >= 9.1 com PostGIS >= 2.1.
@@ -94,8 +95,38 @@ A classe abstrata [MapasCulturais\Entity](../src/protected/application/lib/Mapas
 - **EntityVerifiable** - Deve ser usado em entidades *verificáveis*, o seja, que podem ser marcadas como *oficiais* pelos admins ou membros da equipe.
 
 ### Verificação de Permissões
+A verificação das permissões são feitas através do método **checkPermission** passando como parâmetro para este o nome da ação que você deseja checar se o usuário tem ou não permissão para executar. Este método, por ua vez, chama o método [canUser](#método-canuser) que retornará um booleando *true* se o usuário pode executar a ação ou *false* se o usuário não pode executar a ação. Caso o usuário não possa executar a ação, o método **checkPermission** lançará uma exceção do tipo [PermissionDenied](#permissiondenied).
 
-### Validações
+#### Método canUser
+O método **canUser** recebe como primeiro parâmetro o nome da ação e opcionalmente, como segundo parâmetro, um usuário. Se nenhum usuário for enviado, será usado o usuário logado ou *guest*. O retorno desta função é um booleano indicando se o usuário pode ou não executar a ação.
+
+Este método procurará por um método auxilar chamado *canUser acrescido do nome da ação* (exemplo: para a ação **remove**, um método chamado **canUserRemove**) e caso não ache será usado o método [genericPermissionVerification](#método-genericpermissionverification).
+
+No exemplo a seguir dizemos que somente admins podem alterar o satatus da entidade Exemplo.
+```PHP
+class Exemplo extends MapasCulturais\Entity{
+    use MapasCulturais\Traits\MagicSetter
+    ....
+    ....
+    protected $_status = 0;
+    
+    function setStatus($status){
+        $this->checkPermission('modifyStatus');
+        $this->spam = $status;
+        $this->save();
+    }
+    
+    protected function canUserModifyStatus($user){
+        if($user->is("admin"))
+            return true;
+        else
+            return false;
+    }
+}
+
+```
+
+### Validações das Entidades
 
 ## Controller
 
@@ -343,3 +374,7 @@ Para saber se um usuário está logado você pode verificar se o usuário não é *gue
     <p>O usuário não está logado</p>
 <?php endif; ?>
 ```
+
+## Exceções
+
+### PermissionDenied
