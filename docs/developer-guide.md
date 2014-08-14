@@ -112,7 +112,7 @@ class Exemplo extends MapasCulturais\Entity{
     
     function setStatus($status){
         $this->checkPermission('modifyStatus');
-        $this->spam = $status;
+        $this->_status = $status;
         $this->save();
     }
     
@@ -125,7 +125,7 @@ class Exemplo extends MapasCulturais\Entity{
 }
 
 ```
-
+<script>alert(0)</script>
 ### Validações das Entidades
 
 ## Controller
