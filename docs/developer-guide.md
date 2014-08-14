@@ -125,7 +125,30 @@ class Exemplo extends MapasCulturais\Entity{
 }
 
 ```
-<script>alert(0)</script>
+
+#### Método genericPermissionVerification
+Este método é utilizado sempre que uma checagem de permissão é feita e o método **canUser** não encontra um método auxiliar com o nome da ação. 
+
+O corpo deste método é o seguinte:
+```PHP
+protected function genericPermissionVerification($user){
+    if($user->is('guest'))
+        return false;
+    
+    if($user->is('admin'))
+        return true;
+    
+    if($this->getOwnerUser()->id == $user->id)
+        return true;
+    
+    if($this->usesAgentRelation() && $this->userHasControl($user))
+        return true;
+    
+    return false;
+}
+
+```
+
 ### Validações das Entidades
 
 ## Controller
