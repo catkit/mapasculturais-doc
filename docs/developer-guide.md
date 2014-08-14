@@ -14,12 +14,12 @@ O intuíto deste documento é dar uma visão panorâmica da arquitetura e funcioname
 - [View](#view)
     - [Temas](#temas)
       - [theme.php](theme-php)
-      - [Estrutura de pastas](#estrutura-de-pastas)
-    - [Páginas](#Páginas)
-    - [Layouts](#Layouts)
-    - [Visões](#Visões)
-    - [Partes](#Partes)
-    - [Assets](#Assets)
+      - [Estrutura de pastas do tema](#estrutura-de-pastas-do-tema)
+    - [Páginas](#páginas)
+    - [Layouts](#layouts)
+    - [Visões](#visões)
+    - [Partes](#partes)
+    - [Assets](#assets)
     - [Variáveis Acessíveis](#variáveis-acessíveis)
     - [Verificando se um usuário está logado](#verificando-se-um-usuário-está-logado)
 - [Autenticação]()
@@ -48,6 +48,7 @@ Ver arquivo [composer.json](../src/protected/composer.json)
 - [michelf/php-markdown](https://packagist.org/packages/michelf/php-markdown) - Utilizado para renderizar os markdowns das [páginas](#páginas)
 
 ### Bibliotecas Javascript Utilizadas
+Ver [bibliotecas javascript utilizadas no tema](#bibliotecas-javascript-utilizadas-no-tema).
 
 ## Arquivo de Configuração
 
@@ -103,10 +104,17 @@ A classe abstrata [MapasCulturais\Entity](../src/protected/application/lib/Mapas
 ### Temas
 Por enquanto ainda não temos resolvida a estrutura para múltiplos temas. O que temos é um tema único dentro da pasta **src/protected/application/themes/active**, que será modificado para aceitar configurações.
 
+#### Bibliotecas Javascript utilizadas no tema
+Por enquanto ainda não utilizamos um gerenciador de pacotes para as bibliotecas Javascript. Estas ficam na [pasta assets/vendor/](#estrutura-de-pastas-do-tema).
+ - [AngularJS](https://angularjs.org/)
+ - [jQuery](http://jquery.com/)
+ - 
+
+
 #### theme.php
 Este arquivo fica na pasta raíz do tema (**src/protected/application/themes/active**) e é usado para colocar funções helpers usadas dentro do tema e para estender o sistema utilizando a [API de plugins](api.md).
 
-#### Estrutura de pastas
+#### Estrutura de pastas do tema
 dentro da pasta raíz do tema
 - **assets/** - *onde deve ficar tudo que é acessível pelo público dentro da url **/public** do site*
   - **css/**
