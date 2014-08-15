@@ -1,72 +1,72 @@
 Guia do Desenvolvedor
 =====================
 
-O intuÃ­to deste documento Ã© dar uma visÃ£o panorÃ¢mica da arquitetura e funcionamento do Mapas Culturais para quem quiser colaborar no desenvolvimento da plataforma. Este documento estÃ¡ ainda incompleto e em constante desenvolvimento.
+O intuíto deste documento é dar uma visão panorâmica da arquitetura e funcionamento do Mapas Culturais para quem quiser colaborar no desenvolvimento da plataforma. Este documento está ainda incompleto e em constante desenvolvimento.
 
-- [IntroduÃ§Ã£o](#introduÃ§Ã£o)
+- [Introdução](#introdução)
     - [Bibliotecas PHP utilizadas](#bibliotecas-php-utilizadas)
     - [Bibliotecas Javascript utilizadas](#bibliotecas-javascript-utilizadas)
-- [Arquivo de ConfiguraÃ§Ã£o](#arquivo-de-configuracao)
+- [Arquivo de Configuração](#arquivo-de-configuracao)
 - [App](#app)
 - [Traits](#traits)
-    - [Traits GenÃ©ricos](#traits-genÃ©ricos)
+    - [Traits Genéricos](#traits-genéricos)
 - [Model](#model)
 - [Controller](#controller)
 - [View](#view)
     - [Temas](#temas)
       - [theme.php](theme-php)
       - [Estrutura de pastas do tema](#estrutura-de-pastas-do-tema)
-    - [PÃ¡ginas](#pÃ¡ginas)
+    - [Páginas](#páginas)
     - [Layouts](#layouts)
-    - [VisÃµes](#visÃµes)
+    - [Visões](#visões)
     - [Partes](#partes)
     - [Assets](#assets)
-    - [VariÃ¡veis AcessÃ­veis](#variÃ¡veis-acessÃ­veis)
-    - [Verificando se um usuÃ¡rio estÃ¡ logado](#verificando-se-um-usuÃ¡rio-estÃ¡-logado)
-- [AutenticaÃ§Ã£o]()
+    - [Variáveis Acessíveis](#variáveis-acessíveis)
+    - [Verificando se um usuário está logado](#verificando-se-um-usuário-está-logado)
+- [Autenticação]()
 - [Roles]()
 - [Log]()
 - [Cache]()
 - [Outputs da API]()
-- [ExceÃ§Ãµes]()
+- [Exceções]()
 
-## IntroduÃ§Ã£o
-O mÃ­nimo requerido para rodar o Mapas Culturais Ã© PHP >= 5.4, PostgreSQL >= 9.1 com PostGIS >= 2.1.
+## Introdução
+O mínimo requerido para rodar o Mapas Culturais é PHP >= 5.4, PostgreSQL >= 9.1 com PostGIS >= 2.1.
 
-As seguintes extensÃµes do PHP sÃ£o requeridas: *gd, apc, zip, curl, pgsql, phar, pdo_pgsql*.
+As seguintes extensões do PHP são requeridas: *gd, apc, zip, curl, pgsql, phar, pdo_pgsql*.
 
 
 ### Bibliotecas PHP Utilizadas
 Ver arquivo [composer.json](../src/protected/composer.json)
 - [Slim](https://packagist.org/packages/slim/slim) - Microframework em cima do qual foi escria a classe [App](#app) do MapasCulturais.
 - [Doctrine/ORM](https://packagist.org/packages/doctrine/orm) - ORM utilizado para o mapeamento das entidades.
-- [Opauth/OpenId](https://packagist.org/packages/opauth/openid) - Utilizado para autenticaÃ§Ã£o via OpenId.
-- [respect/validation](https://packagist.org/packages/respect/validation) - Utilizado para as validaÃ§Ãµes das propriedades e metadados das entidades.
+- [Opauth/OpenId](https://packagist.org/packages/opauth/openid) - Utilizado para autenticação via OpenId.
+- [respect/validation](https://packagist.org/packages/respect/validation) - Utilizado para as validações das propriedades e metadados das entidades.
 - [smottt/wideimage](https://packagist.org/packages/smottt/wideimage) - Utilizado para *transformar* imagens (criar thumbnails, por exemplo).
 - [phpunit/phpunit](https://packagist.org/packages/phpunit/phpunit) - Utilizado para testes.
-- [creof/doctrine2-spatial](https://packagist.org/packages/creof/doctrine2-spatial) - Faz o mapeamento de vÃ¡rias procedures do PostGIS para o doctrine.
+- [creof/doctrine2-spatial](https://packagist.org/packages/creof/doctrine2-spatial) - Faz o mapeamento de várias procedures do PostGIS para o doctrine.
 - [mustache/mustache](https://packagist.org/packages/mustache/mustache) - Utilizado para renderizar alguns templates.
-- [phpoffice/phpword](https://packagist.org/packages/phpoffice/phpword) - Utilizado para criar .docs ou .xls onde necessÃ¡rio.
-- [michelf/php-markdown](https://packagist.org/packages/michelf/php-markdown) - Utilizado para renderizar os markdowns das [pÃ¡ginas](#pÃ¡ginas)
+- [phpoffice/phpword](https://packagist.org/packages/phpoffice/phpword) - Utilizado para criar .docs ou .xls onde necessário.
+- [michelf/php-markdown](https://packagist.org/packages/michelf/php-markdown) - Utilizado para renderizar os markdowns das [páginas](#páginas)
 
 ### Bibliotecas Javascript Utilizadas
 Ver [bibliotecas javascript utilizadas no tema](#bibliotecas-javascript-utilizadas-no-tema).
 
-## Arquivo de ConfiguraÃ§Ã£o
+## Arquivo de Configuração
 
 ## App
 
 ## Traits
 Os [traits](http://php.net/manual/pt_BR/language.oop5.traits.php) ficam no namespace **MapasCulturais\Traits** e seus arquivos na pasta [src/protected/application/lib/MapasCulturais/Traits](../src/protected/application/lib/MapasCulturais/Traits). 
 
-Se houver no nome do trait um prefixo (*Entity, Controller ou Repository*) significa que este trait sÃ³ deve ser utilizado em classes que estendam a classe com o nome do prefixo dentro do namespace MapasCulturais (ex: o trait *EntityAvatar* sÃ³ deve ser utilizado em classes que estendem a classe *MapasCulturais\Entity*). JÃ¡ se nÃ£o houver um prefixo significa que Ã© um [trait genÃ©rico](#traits-genÃ©ricos) e que pode ser utilizado em qualquer classe (exemplos: Singleton e MagigGetter).
+Se houver no nome do trait um prefixo (*Entity, Controller ou Repository*) significa que este trait só deve ser utilizado em classes que estendam a classe com o nome do prefixo dentro do namespace MapasCulturais (ex: o trait *EntityAvatar* só deve ser utilizado em classes que estendem a classe *MapasCulturais\Entity*). Já se não houver um prefixo significa que é um [trait genérico](#traits-genéricos) e que pode ser utilizado em qualquer classe (exemplos: Singleton e MagigGetter).
 
 
-### Traits GenÃ©ricos
-Os traits genÃ©ricos podem ser usados em qualquer classe do sistema.
+### Traits Genéricos
+Os traits genéricos podem ser usados em qualquer classe do sistema.
 
 #### Singleton
-Implementa o design pattern [singleton](http://pt.wikipedia.org/wiki/Singleton). Ã‰ utilizada nas classes **App**, **GuestUser**, **ApiOutput**, **Controller** entre outras.
+Implementa o design pattern [singleton](http://pt.wikipedia.org/wiki/Singleton). É utilizada nas classes **App**, **GuestUser**, **ApiOutput**, **Controller** entre outras.
 
 #### MagicGetter
 #### MagicSetter
@@ -76,12 +76,12 @@ Implementa o design pattern [singleton](http://pt.wikipedia.org/wiki/Singleton).
 ## Model
 As classes de modelo ficam no namespace **MapasCulturais\Entities** e seus arquivos dentro da pasta [src/protected/application/lib/MapasCulturais/Entities](../src/protected/application/lib/MapasCulturais/Entities). 
 
-Estas classes devem estender a classe abstrata [MapasCulturais\Entity](#classe-entity) e usar os [Docblock Annotations](http://docs.doctrine-project.org/en/latest/reference/annotations-reference.html) do [Doctrine](http://docs.doctrine-project.org/en/latest/index.html) para fazer o [mapeamento](http://docs.doctrine-project.org/en/latest/reference/basic-mapping.html) com a representaÃ§Ã£o desta entidade no banco de dados (geralmente uma tabela). 
+Estas classes devem estender a classe abstrata [MapasCulturais\Entity](#classe-entity) e usar os [Docblock Annotations](http://docs.doctrine-project.org/en/latest/reference/annotations-reference.html) do [Doctrine](http://docs.doctrine-project.org/en/latest/index.html) para fazer o [mapeamento](http://docs.doctrine-project.org/en/latest/reference/basic-mapping.html) com a representação desta entidade no banco de dados (geralmente uma tabela). 
 
-Estas podem tambÃ©m usar os [traits criados para entidades](#traits-das-entidades) (os que tÃªm o prefixo **Entity** no nome, como por exmplo o *EntityFiles*, que Ã© para ser usado em entidades que tÃªm arquivos anexos).
+Estas podem também usar os [traits criados para entidades](#traits-das-entidades) (os que têm o prefixo **Entity** no nome, como por exmplo o *EntityFiles*, que é para ser usado em entidades que têm arquivos anexos).
 
 ### Classe Entity
-A classe abstrata [MapasCulturais\Entity](../src/protected/application/lib/MapasCulturais/Entity.php) Ã© a classe que serve de base para todoas as entidades do sistema. Implementa uma sÃ©rie de mÃ©todos Ãºteis para, entre outros, [verificaÃ§Ã£o de permissÃµes](#verificaÃ§Ã£o-de-permissÃµes), serializaÃ§Ã£o e [validaÃ§Ãµes](#validaÃ§Ãµes).
+A classe abstrata [MapasCulturais\Entity](../src/protected/application/lib/MapasCulturais/Entity.php) é a classe que serve de base para todoas as entidades do sistema. Implementa uma série de métodos úteis para, entre outros, [verificação de permissões](#verificação-de-permissões), serialização e [validações](#validações).
 
 ### Traits das Entidades
 
@@ -89,22 +89,22 @@ A classe abstrata [MapasCulturais\Entity](../src/protected/application/lib/Mapas
 - **EntityFiles** - Deve ser usado em entidades que podem ter arquivos anexados.
 - **EntityAvatar** - Deve ser usado em entidades que tenham avatar. Requer o trait *EntityFiles*.
 - **EntityGeoLocation** - Deve ser usado em entidades georreferenciadas. Requer as propriedades *location*, do tipo *point*, e *_geoLocation*, do tipo *geography*.
-- **EntityMetadata** - Deve ser usado em entidades que tenham metadados. Requer de uma entidade auxiliar. Se existir no mesmo namespace uma classe com o nome da entidade acrescida do sufixo *Meta* (exemplo: para a entidade *Agent*, uma classe *AgentMeta*), esta serÃ¡ usada, senÃ£o a entidade Metadata serÃ¡ usada como auxiliar.
-- **EntityMetaLists** - Deve ser usado em entidades que tenham metadados com mÃºltiplos valores por chave. (exemplo de uso: links).
-- **EntityNested** - Deve ser usado em entidades hierarquicas. Requer as [associaÃ§Ãµes autoreferenciadas](http://docs.doctrine-project.org/en/latest/reference/association-mapping.html#one-to-many-self-referencing) *children* e *parent*.
-- **EntityOwnerAgent** - Deve ser usado em entidades que tenham a associaÃ§Ã£o [ManyToOne](http://docs.doctrine-project.org/en/latest/reference/association-mapping.html#many-to-one-unidirectional) *owner* apontando para a entidade *MapasCulturais\Entity\Agent*. Requer tambÃ©m um mapeamento do tipo *int* chamado *_ownerId* que representa o id do agente que Ã© dono desta entidade.
+- **EntityMetadata** - Deve ser usado em entidades que tenham metadados. Requer de uma entidade auxiliar. Se existir no mesmo namespace uma classe com o nome da entidade acrescida do sufixo *Meta* (exemplo: para a entidade *Agent*, uma classe *AgentMeta*), esta será usada, senão a entidade Metadata será usada como auxiliar.
+- **EntityMetaLists** - Deve ser usado em entidades que tenham metadados com múltiplos valores por chave. (exemplo de uso: links).
+- **EntityNested** - Deve ser usado em entidades hierarquicas. Requer as [associações autoreferenciadas](http://docs.doctrine-project.org/en/latest/reference/association-mapping.html#one-to-many-self-referencing) *children* e *parent*.
+- **EntityOwnerAgent** - Deve ser usado em entidades que tenham a associação [ManyToOne](http://docs.doctrine-project.org/en/latest/reference/association-mapping.html#many-to-one-unidirectional) *owner* apontando para a entidade *MapasCulturais\Entity\Agent*. Requer também um mapeamento do tipo *int* chamado *_ownerId* que representa o id do agente que é dono desta entidade.
 - **EntitySoftDelete** - Usado em entidades que necessitem de lixeira. Requer um mapeamento do tipo *int* chamado *status*.
-- **EntityTaxonomies** - Deve ser usado em entidades que precisem de taxonomias (tags, Ã¡rea de atuaÃ§Ã£o, etc.).
+- **EntityTaxonomies** - Deve ser usado em entidades que precisem de taxonomias (tags, área de atuação, etc.).
 - **EntityTypes** - Deve ser usado em entidades que tenham tipos. Requer um mapeamento do tipo *int* chamado *_type*. 
-- **EntityVerifiable** - Deve ser usado em entidades *verificÃ¡veis*, o seja, que podem ser marcadas como *oficiais* pelos admins ou membros da equipe.
+- **EntityVerifiable** - Deve ser usado em entidades *verificáveis*, o seja, que podem ser marcadas como *oficiais* pelos admins ou membros da equipe.
 
-### VerificaÃ§Ã£o de PermissÃµes
-A verificaÃ§Ã£o das permissÃµes sÃ£o feitas atravÃ©s do mÃ©todo **checkPermission** passando como parÃ¢metro para este o nome da aÃ§Ã£o que vocÃª deseja checar se o usuÃ¡rio tem ou nÃ£o permissÃ£o para executar. Este mÃ©todo, por ua vez, chama o mÃ©todo [canUser](#mÃ©todo-canuser) que retornarÃ¡ um booleando *true* se o usuÃ¡rio pode executar a aÃ§Ã£o ou *false* se o usuÃ¡rio nÃ£o pode executar a aÃ§Ã£o. Caso o usuÃ¡rio nÃ£o possa executar a aÃ§Ã£o, o mÃ©todo **checkPermission** lanÃ§arÃ¡ uma exceÃ§Ã£o do tipo [PermissionDenied](#permissiondenied).
+### Verificação de Permissões
+A verificação das permissões são feitas através do método **checkPermission** passando como parâmetro para este o nome da ação que você deseja checar se o usuário tem ou não permissão para executar. Este método, por ua vez, chama o método [canUser](#método-canuser) que retornará um booleando *true* se o usuário pode executar a ação ou *false* se o usuário não pode executar a ação. Caso o usuário não possa executar a ação, o método **checkPermission** lançará uma exceção do tipo [PermissionDenied](#permissiondenied).
 
-#### MÃ©todo canUser
-O mÃ©todo **canUser** recebe como primeiro parÃ¢metro o nome da aÃ§Ã£o e opcionalmente, como segundo parÃ¢metro, um usuÃ¡rio. Se nenhum usuÃ¡rio for enviado, serÃ¡ usado o usuÃ¡rio logado ou *guest*. O retorno desta funÃ§Ã£o Ã© um booleano indicando se o usuÃ¡rio pode ou nÃ£o executar a aÃ§Ã£o.
+#### Método canUser
+O método **canUser** recebe como primeiro parâmetro o nome da ação e opcionalmente, como segundo parâmetro, um usuário. Se nenhum usuário for enviado, será usado o usuário logado ou *guest*. O retorno desta função é um booleano indicando se o usuário pode ou não executar a ação.
 
-Este mÃ©todo procurarÃ¡ por um mÃ©todo auxilar chamado *canUser acrescido do nome da aÃ§Ã£o* (exemplo: para a aÃ§Ã£o **remove**, um mÃ©todo chamado **canUserRemove**) e caso nÃ£o ache serÃ¡ usado o mÃ©todo [genericPermissionVerification](#mÃ©todo-genericpermissionverification).
+Este método procurará por um método auxilar chamado *canUser acrescido do nome da ação* (exemplo: para a ação **remove**, um método chamado **canUserRemove**) e caso não ache será usado o método [genericPermissionVerification](#método-genericpermissionverification).
 
 No exemplo a seguir dizemos que somente admins podem alterar o satatus da entidade Exemplo.
 ```PHP
@@ -130,10 +130,10 @@ class Exemplo extends MapasCulturais\Entity{
 
 ```
 
-#### MÃ©todo genericPermissionVerification
-Este mÃ©todo Ã© utilizado sempre que uma checagem de permissÃ£o Ã© feita e o mÃ©todo **canUser** nÃ£o encontra um mÃ©todo auxiliar com o nome da aÃ§Ã£o. 
+#### Método genericPermissionVerification
+Este método é utilizado sempre que uma checagem de permissão é feita e o método **canUser** não encontra um método auxiliar com o nome da ação. 
 
-O corpo deste mÃ©todo Ã© o seguinte:
+O corpo deste método é o seguinte:
 ```PHP
 protected function genericPermissionVerification($user){
     if($user->is('guest'))
@@ -153,63 +153,63 @@ protected function genericPermissionVerification($user){
 
 ```
 
-### ValidaÃ§Ãµes das Entidades
+### Validações das Entidades
 
 ## Controller
 
 ## View
 
 ### Temas
-Por enquanto ainda nÃ£o temos resolvida a estrutura para mÃºltiplos temas. O que temos Ã© um tema Ãºnico dentro da pasta **src/protected/application/themes/active**, que serÃ¡ modificado para aceitar configuraÃ§Ãµes.
+Por enquanto ainda não temos resolvida a estrutura para múltiplos temas. O que temos é um tema único dentro da pasta **src/protected/application/themes/active**, que será modificado para aceitar configurações.
 
 #### Bibliotecas Javascript utilizadas no tema
-Por enquanto ainda nÃ£o utilizamos um gerenciador de pacotes para as bibliotecas Javascript. Estas ficam na [pasta assets/vendor/](#estrutura-de-pastas-do-tema).
+Por enquanto ainda não utilizamos um gerenciador de pacotes para as bibliotecas Javascript. Estas ficam na [pasta assets/vendor/](#estrutura-de-pastas-do-tema).
  - [AngularJS](https://angularjs.org/)
  - [jQuery](http://jquery.com/)
  - 
 
 
 #### theme.php
-Este arquivo fica na pasta raÃ­z do tema (**src/protected/application/themes/active**) e Ã© usado para colocar funÃ§Ãµes helpers usadas dentro do tema e para estender o sistema utilizando a [API de plugins](api.md).
+Este arquivo fica na pasta raíz do tema (**src/protected/application/themes/active**) e é usado para colocar funções helpers usadas dentro do tema e para estender o sistema utilizando a [API de plugins](api.md).
 
 #### Estrutura de pastas do tema
-dentro da pasta raÃ­z do tema
-- **assets/** - *onde deve ficar tudo que Ã© acessÃ­vel pelo pÃºblico dentro da url **/public** do site*
+dentro da pasta raíz do tema
+- **assets/** - *onde deve ficar tudo que é acessível pelo público dentro da url **/public** do site*
   - **css/**
   - **fonts/**
   - **img/**
   - **vendor/**
 - **layouts/** - *onde ficam os layouts do site*
     - **parts/** - *onde ficam os template parts utilizados pelo tema*
-- **views/** - *onde ficam as viÃµes dos controles*
-- **pages/** - onde ficam os arquivos de pÃ¡ginas
+- **views/** - *onde ficam as viões dos controles*
+- **pages/** - onde ficam os arquivos de páginas
 
-### PÃ¡ginas
-As pÃ¡ginas do sistema sÃ£o arquivos **.md** (Markdown) salvos dentro da pasta **pages/** do tema. Para criar uma nova pÃ¡gina basta criar um novo arquivo **.md** dentro desta pasta. Estes arquivos sÃ£o renderizadas pela biblioteca [PHP Markdown Extra](https://michelf.ca/projects/php-markdown/extra/).
+### Páginas
+As páginas do sistema são arquivos **.md** (Markdown) salvos dentro da pasta **pages/** do tema. Para criar uma nova página basta criar um novo arquivo **.md** dentro desta pasta. Estes arquivos são renderizadas pela biblioteca [PHP Markdown Extra](https://michelf.ca/projects/php-markdown/extra/).
 
-#### Url da pÃ¡gina
-Para uma pÃ¡gina cujo nome de arquivo Ã© **nome-da-pagina.md**, a url de acesso serÃ¡ **http://mapasculturais/page/site/nome-da-pagina/**
-
-
-#### TÃ­tulo da pÃ¡gina
-O texto do **primeiro h1** do conteÃºdo da pÃ¡gina serÃ¡ utilizado como tÃ­tulo da pÃ¡gina (tag <title>). Isto Ã© feito via javascript.
+#### Url da página
+Para uma página cujo nome de arquivo é **nome-da-pagina.md**, a url de acesso será **http://mapasculturais/page/site/nome-da-pagina/**
 
 
-No exemplo a seguir o tÃ­tulo da pÃ¡gina serÃ¡ **TÃ­tulo da PÃ¡gna**
+#### Título da página
+O texto do **primeiro h1** do conteúdo da página será utilizado como título da página (tag <title>). Isto é feito via javascript.
+
+
+No exemplo a seguir o título da página será **Título da Págna**
 ```Markdown
-# TÃ­tulo da PÃ¡gina
+# Título da Página
 
-ConteÃºdo da pÃ¡gina ....
+Conteúdo da página ....
 
 ```
 
 #### Sidebars
-O ConteÃºdo das sidebars estÃ£o nos arquivos **_right.md** e **_left.md**
+O Conteúdo das sidebars estão nos arquivos **_right.md** e **_left.md**
 
 #### Substituindo uma sidebar
-VocÃª pode substituir uma sidebar envolvendo o conteÃºdo que vocÃª deseja que substitua o conteÃºdo padrÃ£o com as tags **<%left left%>** para a sidebar da esquerda e **<%right right%>** para a sidebar da direita.
+Você pode substituir uma sidebar envolvendo o conteúdo que você deseja que substitua o conteúdo padrão com as tags **<%left left%>** para a sidebar da esquerda e **<%right right%>** para a sidebar da direita.
 
-No exemplo a seguir substituimos a sidebar da direita por um menu com trÃªs links:
+No exemplo a seguir substituimos a sidebar da direita por um menu com três links:
 ```Markdown
 <%right 
 - [Primeiro link](#primeiro)
@@ -217,31 +217,31 @@ No exemplo a seguir substituimos a sidebar da direita por um menu com trÃªs link
 - [Terceiro link](#terceiro)
 right%>
 
-# TÃ­tulo da PÃ¡gina
+# Título da Página
 
-ConteÃºdo da pÃ¡gina ....
+Conteúdo da página ....
 ```
 
 #### Extendendo uma sidebar
-VocÃª pode extender uma sidebar, adicionando conteÃºdo antes ou depois do conteÃºdo padrÃ£o, colocando um **:after** ou **:before** logo depois da tag de abertura.
+Você pode extender uma sidebar, adicionando conteúdo antes ou depois do conteúdo padrão, colocando um **:after** ou **:before** logo depois da tag de abertura.
 
 No exemplo a seguir extendemos a sidebar da esquerda adicionando um menu com 2 links no final da sidebar:
 ```Markdown
 <%left:after
-## submenu da pÃ¡gina
+## submenu da página
 
 - [Primeiro Link](#primeiro)
 - [Segundo Link](#segundo)
 left%>
 
-# TÃ­tulo da PÃ¡gina
+# Título da Página
 
-ConteÃºdo da pÃ¡gina ....
+Conteúdo da página ....
 ```
 
 
 ### Layouts
-O layout Ã© a "moldura" do conteÃºdo de uma visÃ£o. A estrutura mÃ­nima de um layout Ã© a seguinte:
+O layout é a "moldura" do conteúdo de uma visão. A estrutura mínima de um layout é a seguinte:
 
 ```HTML+PHP
 <html>
@@ -251,60 +251,60 @@ O layout Ã© a "moldura" do conteÃºdo de uma visÃ£o. A estrutura mÃ­nima de um la
     </head>
     <body>
         <?php body_header(); ?>
-        <?php echo $TEMPLATE_CONTENT; /* aqui entra o conteÃºdo da view */ ?>
+        <?php echo $TEMPLATE_CONTENT; /* aqui entra o conteúdo da view */ ?>
         <?php body_footer(); ?>
     </body>
 </html>
 ```
 
-Por padrÃ£o as visÃµes usam o arquivo de layout **default.php**, mas vocÃª pode definir qual layout elas usarÃ£o colocando a seguinte linha na primeira linha do seu arquivo de visÃ£o:
+Por padrão as visões usam o arquivo de layout **default.php**, mas você pode definir qual layout elas usarão colocando a seguinte linha na primeira linha do seu arquivo de visão:
 ```PHP
-$this->layout = 'nome-do-layout'; // nÃ£o precisa do .php no nome do template
+$this->layout = 'nome-do-layout'; // não precisa do .php no nome do template
 ```
 
-### VisÃµes
-As visÃµes sÃ£o chamadas de dentro das [actions do controller](#actions) atravÃ©s do [mÃ©todo render](#mÃ©todo-render), que inclui o [layout](#layouts) definido na view, ou do [mÃ©todo partial](#mÃ©todo-partial), que **nÃ£o** inclui o layout. 
+### Visões
+As visões são chamadas de dentro das [actions do controller](#actions) através do [método render](#método-render), que inclui o [layout](#layouts) definido na view, ou do [método partial](#método-partial), que **não** inclui o layout. 
 
-Quando a visÃ£o Ã© chamada pelo mÃ©todo render, o conteÃºdo renderizado da visÃ£o Ã© guardado na variÃ¡vel **$TEMPLATE_CONTENT** e enviado para o layout.
+Quando a visão é chamada pelo método render, o conteúdo renderizado da visão é guardado na variável **$TEMPLATE_CONTENT** e enviado para o layout.
 
-#### VisÃµes das actions single, create e edit
-Os arquivos de visÃ£o **single.php**, **create.php** e **edit.php** dos controladores **agent**, **space**, **event** e **project** sÃ£o, nÃ£o relidade, o mesmo arquivo. O arquivo *real* Ã© o **single.php** e os dois outros sÃ£o *links simbÃ³licos* para o primeiro.
+#### Visões das actions single, create e edit
+Os arquivos de visão **single.php**, **create.php** e **edit.php** dos controladores **agent**, **space**, **event** e **project** são, não relidade, o mesmo arquivo. O arquivo *real* é o **single.php** e os dois outros são *links simbólicos* para o primeiro.
 
-Para saber, de dentro de um destes arquivos, em qual action vocÃª estÃ¡, vocÃª pode usar a propriedade **$this->controller->action**:
+Para saber, de dentro de um destes arquivos, em qual action você está, você pode usar a propriedade **$this->controller->action**:
 
 ```HTML+PHP
 <?php if($this->controller->action == 'single'): ?>
-    <p>vocÃª estÃ¡ visualizando a entidade</p>
+    <p>você está visualizando a entidade</p>
 <?php elseif($this->controller->action == 'edit'): ?>
-    <p>vocÃª estÃ¡ editando a entidade</p>
+    <p>você está editando a entidade</p>
 <?php else: ?>
-    <p>vocÃª estÃ¡ criando uma nova entidade<p>
+    <p>você está criando uma nova entidade<p>
 <?php endif; ?>
 ```
 
-Se vocÃª sÃ³ deseja saber se estÃ¡ no modo de ediÃ§Ã£o use a funÃ§Ã£o **is_editable()**:
+Se você só deseja saber se está no modo de edição use a função **is_editable()**:
 ```HTML+PHP
 <?php if(is_editable(): ?>
-    <p> vocÃª estÃ¡ em modo de ediÃ§Ã£o (edit ou create). </p>
+    <p> você está em modo de edição (edit ou create). </p>
 <?php else: ?>
-    <p> vocÃª estÃ¡ somente visualizando a entidade. <p>
+    <p> você está somente visualizando a entidade. <p>
 <?php endif; ?>
 ```
 
 ### Partes
-As partes sÃ£o blocos de cÃ³digo que podem ser incluidos em diferentes views, layouts ou mesmo dentro de outras partes. Estes blocos de cÃ³digo devem ficar, por padrÃ£o, na pasta **layouts/parts/** do tema.
+As partes são blocos de código que podem ser incluidos em diferentes views, layouts ou mesmo dentro de outras partes. Estes blocos de código devem ficar, por padrão, na pasta **layouts/parts/** do tema.
 
-Para usar uma parte cujo nome de arquivo Ã© **uma-parte.php** basta chamar o mÃ©todo **part** da seguinte forma:
+Para usar uma parte cujo nome de arquivo é **uma-parte.php** basta chamar o método **part** da seguinte forma:
 
 ```HTML+PHP
-<div> A parte serÃ¡ incluida a seguir: </div>
+<div> A parte será incluida a seguir: </div>
 <?php $this->part('uma-parte'); ?>
 ```
 
-#### Enviando variÃ¡veis para dentro das partes
-VocÃª pode enviar variÃ¡veis para usar dentro das partes. Isto Ã© Ãºtil em vÃ¡rias situaÃ§Ãµes, por exmplo quando vocÃª quer que uma parte seja usada dentro de um loop e vocÃª tem que enviar o item atual do loop para usar dentro da parte.
+#### Enviando variáveis para dentro das partes
+Você pode enviar variáveis para usar dentro das partes. Isto é útil em várias situações, por exmplo quando você quer que uma parte seja usada dentro de um loop e você tem que enviar o item atual do loop para usar dentro da parte.
 
-No exemplo a seguir, passamos uma variÃ¡vel chamada **user_name**, com o valor **"Fulano de Tal"**, para dentro da parte **uma-parte**.
+No exemplo a seguir, passamos uma variável chamada **user_name**, com o valor **"Fulano de Tal"**, para dentro da parte **uma-parte**.
 ```PHP
 // dentro de algum arquivo de view, layout ou mesmo outra parte
 $this->part('uma-parte', ['user_name' => 'Fulano de Tal']);
@@ -312,53 +312,53 @@ $this->part('uma-parte', ['user_name' => 'Fulano de Tal']);
 
 ```HTML+PHP
 <!-- dentro do arquivo layouts/parts/uma-parte.php -->
-<span>Nome de usuÃ¡rio: <?php echo $user_name; ?></span>
+<span>Nome de usuário: <?php echo $user_name; ?></span>
 ```
 
 
 ### Assets
-Os assets sÃ£o arquivos estÃ¡ticos (.css, .js, imagens, etc.) utilizados pelo tema. 
+Os assets são arquivos estáticos (.css, .js, imagens, etc.) utilizados pelo tema. 
 
-Para imprimir a url de um asset use a funÃ§Ã£o **$this->asset()**. JÃ¡ se vocÃª deseja adicionar um js ou css use as funÃ§Ãµes **$app->enqueueScript()** e **$app->enqueueStyle()**.
+Para imprimir a url de um asset use a função **$this->asset()**. Já se você deseja adicionar um js ou css use as funções **$app->enqueueScript()** e **$app->enqueueStyle()**.
 
-#### MÃ©todo Asset
-O MÃ©todo **asset** do objeto de funÃ§Ã£o serve para imprimir ou somente retornar a url de um asset. Este mÃ©todo aceita dois parÃ¢metros: 
+#### Método Asset
+O Método **asset** do objeto de função serve para imprimir ou somente retornar a url de um asset. Este método aceita dois parâmetros: 
 
-O primeiro, **$file**, Ã© o caminho do arquivo deseja dentro da pasta assets do tema, como exemplo a string "img/uma-image.jpg".
+O primeiro, **$file**, é o caminho do arquivo deseja dentro da pasta assets do tema, como exemplo a string "img/uma-image.jpg".
 
-O Segundo, **$print**, Ã© opcional e tem como padrÃ£o *true*. Se for passado *false* a funÃ§Ã£o somente retornarÃ¡ a url, mas nÃ£o imprimirÃ¡ nada.
+O Segundo, **$print**, é opcional e tem como padrão *true*. Se for passado *false* a função somente retornará a url, mas não imprimirá nada.
 
 ##### Adicionando uma imagem
-O exemplo a seguir usa uma imagem chamada **logo.png** que estÃ¡ na pasta **assets/img/** do tema.
+O exemplo a seguir usa uma imagem chamada **logo.png** que está na pasta **assets/img/** do tema.
 ```HTML+PHP
 <img src="<?php $this->asset('img/logo.png'); ?>" />
 ```
 
 ##### Criando um link para um asset
-O exemplo a seguir cria um link para o arquivo **documento.pdf** que estÃ¡ na pasta **asset/** do tema.
+O exemplo a seguir cria um link para o arquivo **documento.pdf** que está na pasta **asset/** do tema.
 ```HTML+PHP
 <a href="<?php $this->asset('documento.pdf'); ?>" >Documento</a>
 ```
 
-#### MÃ©todo enqueueStyle
-Este mÃ©todo Ã© utilizado para adicionar arquivos .css que serÃ£o utilizados pela visÃ£o, layout ou parte. Este mÃ©todo aceitas 5 parÃ¢metros (**$group**, **$script_name**, **$script_filename**, *array* **$dependences**, **$media**), sendo os dois Ãºltimo opcional.
+#### Método enqueueStyle
+Este método é utilizado para adicionar arquivos .css que serão utilizados pela visão, layout ou parte. Este método aceitas 5 parâmetros (**$group**, **$script_name**, **$script_filename**, *array* **$dependences**, **$media**), sendo os dois último opcional.
 
-HÃ¡ trÃªs grupos de estilos no sistema: **vendor**, que sÃ£o estilos utilizados pelas bibliotecas, **fonts** que sÃ£o as fontes utilizadas, e **app**, que sÃ£o os estilos escritos exclusivamente para o tema. 
+Há três grupos de estilos no sistema: **vendor**, que são estilos utilizados pelas bibliotecas, **fonts** que são as fontes utilizadas, e **app**, que são os estilos escritos exclusivamente para o tema. 
 
 ##### Adicionando um estilo
-O exemplo a seguir adiciona um estilo chamado **um-estilo.css** escrito para a aplicaÃ§Ã£o.
+O exemplo a seguir adiciona um estilo chamado **um-estilo.css** escrito para a aplicação.
 
 ```PHP
 $app->enqueueStyle('app', 'um-estilo', 'css/um-estilo.css');
 ```
 
-#### MÃ©todo enqueueScript
-Este mÃ©todo Ã© utilizado para adicionar arquivos .js que serÃ£o utilizados pela visÃ£o, layout ou parte. Este mÃ©todo aceitas 4 parÃ¢metros (**$group**, **$script_name**, **$script_filename**, *array* **$dependences**), sendo o Ãºltimo opcional.
+#### Método enqueueScript
+Este método é utilizado para adicionar arquivos .js que serão utilizados pela visão, layout ou parte. Este método aceitas 4 parâmetros (**$group**, **$script_name**, **$script_filename**, *array* **$dependences**), sendo o último opcional.
 
-HÃ¡ dois grupos de scripts no sistema: **vendor**, que sÃ£o as bibliotecas utilizadas, e **app**, que sÃ£o os scripts escritos exclusivamente para o tema. 
+Há dois grupos de scripts no sistema: **vendor**, que são as bibliotecas utilizadas, e **app**, que são os scripts escritos exclusivamente para o tema. 
 
 ##### Adicionando um script
-O exemplo a seguir adiciona um script chamado **um-script.js** escrito para a aplicaÃ§Ã£o.
+O exemplo a seguir adiciona um script chamado **um-script.js** escrito para a aplicação.
 
 ```PHP
 $app->enqueueScript('app', 'um-script', 'js/um-script.js');
@@ -372,36 +372,36 @@ $app->enqueueScript('vendor', 'jquery-ui-datepicker', '/vendor/jquery-ui.datepic
 $app->enqueueScript('vendor', 'jquery', '/vendor/jquery/jquery-2.0.3.min.js');
 ```
 
-#### Ordem de impressÃ£o das tags de estilos e scripts
-Os grupos de estilos e scripts serÃ£o impressos na seguinte ordem e dentro dos grupos os estilos/scripts serÃ£o ordenados conforme suas dependÃªncias:
+#### Ordem de impressão das tags de estilos e scripts
+Os grupos de estilos e scripts serão impressos na seguinte ordem e dentro dos grupos os estilos/scripts serão ordenados conforme suas dependências:
 - Estilos do grupo **vendor**
 - Estilos do grupo **font**
 - Estilos do grupo **app**
 - Scripts do grupo **vendor**
 - Scripts do grupo **app**
 
-### VariÃ¡veis AcessÃ­veis
-De dentro dos arquivos das visÃµes (views, layouts e parts) as seguintes variÃ¡veis estÃ£o acessÃ­veis:
-- **$this** - instÃ¢ncia da classe *MapasCulturais\View*.
+### Variáveis Acessíveis
+De dentro dos arquivos das visões (views, layouts e parts) as seguintes variáveis estão acessíveis:
+- **$this** - instância da classe *MapasCulturais\View*.
     - **$this->assetUrl** - url dos assets.
-    - **$this->baseUrl** - url da raÃ­z do site.
-    - **$this->controller** - o controller que mandou renderizar a visÃ£o.
-    - **$this->controller->action** - a action que mandou renderizar a visÃ£o.
-- **$app** - instÃ¢ncia da classe *MapasCulturais\App*.
-- **$app->user** - o usuÃ¡rio que estÃ£ vendo o site. Este objeto Ã© instÃ¢ncia da classe *MapasCulturais\Entities\User*, se o usuÃ¡rio estiver logado, ou instÃ¢ncia da classe *MapasCulturais\GuestUser*, se o usuÃ¡rio nÃ£o estiver logado.
-- **$app->user->profile** - o agente padrÃ£o do usuÃ¡rio. InstÃ¢ncia da classe *MapasCulturais\Entities\Agent*. *(somente para usuÃ¡rios logados)*
-- **$entity** - Ã© a entidade que estÃ¡ sendo visualizada, editada ou criada. *(somente para as actions single, edit e create dos controladores das entidades agent, space, project e event. Dentro das partes somente se esta foi [enviada](#enviando-variÃ¡veis-para-dentro-das-partes))*
+    - **$this->baseUrl** - url da raíz do site.
+    - **$this->controller** - o controller que mandou renderizar a visão.
+    - **$this->controller->action** - a action que mandou renderizar a visão.
+- **$app** - instância da classe *MapasCulturais\App*.
+- **$app->user** - o usuário que estã vendo o site. Este objeto é instância da classe *MapasCulturais\Entities\User*, se o usuário estiver logado, ou instância da classe *MapasCulturais\GuestUser*, se o usuário não estiver logado.
+- **$app->user->profile** - o agente padrão do usuário. Instância da classe *MapasCulturais\Entities\Agent*. *(somente para usuários logados)*
+- **$entity** - é a entidade que está sendo visualizada, editada ou criada. *(somente para as actions single, edit e create dos controladores das entidades agent, space, project e event. Dentro das partes somente se esta foi [enviada](#enviando-variáveis-para-dentro-das-partes))*
 
-### Verificando se um usuÃ¡rio estÃ¡ logado
-Para saber se um usuÃ¡rio estÃ¡ logado vocÃª pode verificar se o usuÃ¡rio nÃ£o Ã© *guest*. 
+### Verificando se um usuário está logado
+Para saber se um usuário está logado você pode verificar se o usuário não é *guest*. 
 ```HTML+PHP
 <?php if( ! $app->user->is('guest') ): ?>
-    <p>O usuÃ¡rio estÃ¡ logado e o nome do agente padrÃ£o dele Ã© <?php echo $app->user->profile->name; ?> ?></p>
+    <p>O usuário está logado e o nome do agente padrão dele é <?php echo $app->user->profile->name; ?> ?></p>
 <?php else: ?>
-    <p>O usuÃ¡rio nÃ£o estÃ¡ logado</p>
+    <p>O usuário não está logado</p>
 <?php endif; ?>
 ```
 
-## ExceÃ§Ãµes
+## Exceções
 
 ### PermissionDenied
