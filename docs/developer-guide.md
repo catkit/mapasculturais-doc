@@ -1,6 +1,5 @@
 Guia do Desenvolvedor
 =====================
-
 O intuíto deste documento é dar uma visão panorâmica da arquitetura e funcionamento do Mapas Culturais para quem quiser colaborar no desenvolvimento da plataforma. Este documento está ainda incompleto e em constante desenvolvimento.
 
 - [Introdução](#introdução)
