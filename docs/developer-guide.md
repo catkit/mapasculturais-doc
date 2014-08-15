@@ -62,11 +62,14 @@ Se houver no nome do trait um prefixo (*Entity, Controller ou Repository*) signi
 
 
 ### Traits Genéricos
+Os traits genéricos podem ser usados em qualquer classe do sistema.
 
-#### MagicCallers
+#### Singleton
+Implementa o design pattern [singleton](http://pt.wikipedia.org/wiki/Singleton). É utilizada nas classes **App**, **GuestUser**, **ApiOutput**, **Controller** entre outras.
+
 #### MagicGetter
 #### MagicSetter
-#### Singleton
+#### MagicCallers
 
 
 ## Model
